@@ -1,0 +1,2 @@
+# Repositorio Apache Airflow
+Este es un repositorio donde almaceno teoria, apuntes y aplicación que llevan relación con Apache Airflow. De igual manera, distintos proyectos en la creación de data pipelines utilizando esta herramienta.
