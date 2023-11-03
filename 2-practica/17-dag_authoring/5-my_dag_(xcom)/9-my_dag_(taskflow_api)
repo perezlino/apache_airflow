@@ -1,0 +1,35 @@
+from airflow.decorators import dag, task
+from airflow.operators.bash import BashOperator
+
+from datetime import datetime
+from typing import Dict
+
+@dag(start_date=datetime(2021,1,1), catchup=False)
+
+def my_etl(dag_id):
+
+    @task
+    def extract():
+        return 'my data'
+
+    @task
+    def process(data):
+        print(data)
+        return 1
+    
+    @task
+    def store(is_processed):
+        if (is_processed):
+            print(f'store {is_processed}')
+
+    store(process(extract()))
+
+my_etl('my_etl') 
+
+# La tarea process obtiene el siguiente resultado -->
+# [2023-01-07, 21:24:51 UTC] {logging_mixin.py:137} INFO - my data
+# Pero devuelve lo siguiente -->
+# [2023-01-07, 21:24:51 UTC] {python.py:177} INFO - Done. Returned value was: 1
+
+# La tarea "store" obtiene el siguiente resultado --> 
+# [2023-01-07, 21:25:02 UTC] {logging_mixin.py:137} INFO - store 1
